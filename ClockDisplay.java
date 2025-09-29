@@ -11,6 +11,8 @@
  * 
  * @author Michael Kölling and David J. Barnes
  * @version 2016.02.29
+ * 
+ * Edited by Franco Acosta on 09/29/2025
  */
 public class ClockDisplay
 {
