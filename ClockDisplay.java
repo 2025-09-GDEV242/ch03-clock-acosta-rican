@@ -1,5 +1,7 @@
 
 /**
+ * 12 hr Internal clock.
+ * 
  * The ClockDisplay class implements a digital clock display for a
  * European-style 24 hour clock. The clock shows hours and minutes. The 
  * range of the clock is 00:00 (midnight) to 23:59 (one minute before 
