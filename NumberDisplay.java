@@ -10,7 +10,7 @@
  * @author Michael Kölling and David J. Barnes
  * @version 2016.02.29
  * 
- * edited by Franco Acosta on 09/29/2025
+ * edited by Franco Acosta on 09/29/2025, code itself on NumberDisplay class not touched per request.
  */
 public class NumberDisplay
 {

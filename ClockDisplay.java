@@ -2,6 +2,8 @@
 /**
  * 12 hr Internal clock.
  * 
+ * Edited from original code to satisfy book exercise 3.38
+ * 
  * The ClockDisplay class implements a digital clock display for a
  * European-style 24 hour clock. The clock shows hours and minutes. The 
  * range of the clock is 00:00 (midnight) to 23:59 (one minute before 
@@ -20,27 +22,29 @@ public class ClockDisplay
 {
     private NumberDisplay hours;
     private NumberDisplay minutes;
+    private Boolean amPM = true; // new field to decide AM/PM. 'amPM = true' means it's in the AM, 'false' means PM.
     private String displayString;    // simulates the actual display
     
     /**
      * Constructor for ClockDisplay objects. This constructor 
-     * creates a new clock set at 00:00.
+     * creates a new clock set at 00:00 AM.
      */
     public ClockDisplay()
     {
-        hours = new NumberDisplay(24);
+        hours = new NumberDisplay(12); // changed limit parameter in order to work in a 12 hour setting.
         minutes = new NumberDisplay(60);
         updateDisplay();
+        amPM = true;
     }
 
     /**
      * Constructor for ClockDisplay objects. This constructor
      * creates a new clock set at the time specified by the 
-     * parameters.
+     * parameters. 
      */
     public ClockDisplay(int hour, int minute)
     {
-        hours = new NumberDisplay(24);
+        hours = new NumberDisplay(12); // changed limit-parameter to satisfy 12 hr clock.
         minutes = new NumberDisplay(60);
         setTime(hour, minute);
     }
@@ -54,6 +58,8 @@ public class ClockDisplay
         minutes.increment();
         if(minutes.getValue() == 0) {  // it just rolled over!
             hours.increment();
+            if (amPM == true) {amPM = false;}
+            else {amPM = true;}
         }
         updateDisplay();
     }
@@ -64,7 +70,13 @@ public class ClockDisplay
      */
     public void setTime(int hour, int minute)
     {
-        hours.setValue(hour);
+        if ( ((hour / 12 ) % 2) == 0 ){
+            amPM = true;
+        }
+        else {
+            amPM = false; 
+        }
+        hours.setValue(hour%12);
         minutes.setValue(minute);
         updateDisplay();
     }
@@ -79,10 +91,30 @@ public class ClockDisplay
     
     /**
      * Update the internal string that represents the display.
+     * 
+     * Here the system will check if the value is AM/PM and print accordingly.
+     * Cool thing is that my code works with inputs bigger than 24 hours.
+     * e.g. if user puts 28 hrs and 30 mins the output will be "04:30 AM."
      */
-    private void updateDisplay()
-    {
-        displayString = hours.getDisplayValue() + ":" + 
-                        minutes.getDisplayValue();
-    }
-}
+    private void updateDisplay() // limit is 12
+    {   
+        if ( amPM == true ){
+            if (hours.getValue() == 0 ) {
+                displayString = "12:" + 
+                minutes.getDisplayValue() + " AM.";
+            }
+            else{
+                displayString = hours.getDisplayValue() + ":" + minutes.getDisplayValue() + " AM.";
+            }
+        }
+        else {
+            if (hours.getValue() == 0 ) {
+                displayString = "12:" + 
+                minutes.getDisplayValue() + " PM.";
+            }
+            else{
+                displayString = hours.getDisplayValue() + ":" + minutes.getDisplayValue() + " PM.";
+            }
+        }
+    } 
+} //end of code.
